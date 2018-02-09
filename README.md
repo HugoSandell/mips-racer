@@ -5,6 +5,8 @@ no need to edit the Makefile.
 
 The template contains the following source files:
 
+=======
+>>>>>>> 45c00945b2ea109ddbacc1a292d7d7cf6dda8a2d
 main.c:
 	Contains the entry point main()
 
