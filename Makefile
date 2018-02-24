@@ -1,5 +1,5 @@
 # PIC32 device number
-DEVICE		= 32MX320F128H
+DEVICE		= 32MX340F512H
 
 # UART settings for programmer
 TTYDEV		?=/dev/ttyUSB0
@@ -12,7 +12,9 @@ PROGNAME	= outfile
 LINKSCRIPT	:= p$(shell echo "$(DEVICE)" | tr '[:upper:]' '[:lower:]').ld
 
 # Compiler and linker flags
-CFLAGS		+= -ffreestanding -march=mips32r2 -msoft-float -Wa,-msoft-float
+CFLAGS		+= -t -ffreestanding -march=mips32r2 -msoft-float -Wa,-msoft-float
+CFLAGS		+= -I include
+CFLAGS		+= -I libc/templates
 ASFLAGS		+= -msoft-float
 LDFLAGS		+= -T $(LINKSCRIPT)
 
@@ -27,6 +29,7 @@ SYMSFILES	= $(wildcard *.syms)
 
 # Object file names
 OBJFILES        = $(CFILES:.c=.c.o)
+OBJFILES        += $(wildcard libc/*.c.o)
 OBJFILES        +=$(ASFILES:.S=.S.o)
 OBJFILES	+=$(SYMSFILES:.syms=.syms.o)
 
