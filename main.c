@@ -8,7 +8,7 @@
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include <stdlib.h>
 
-extern void srand(unsigned int seed);
+void *stdin, *stdout, *stderr; // Workaround for undefined standard library functions
 
 long long game_time = 0;
 
@@ -44,10 +44,12 @@ int init_calls(){
 }
 
 int main() {
+PORTE = (PORTE + 1) & 0xF;
   srand(0x9324579); // Initialize randomizer
   init_calls();
 
 	while(1){
+    // nop
 	}
 
 	return 0;

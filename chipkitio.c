@@ -33,9 +33,9 @@ unsigned get_switch(int n) {
 // Timer 3 for game ticks
 void init_game_timer(void) {
   disable_interrupts();
-  T3CON = 6 << 4;
+  T3CON = 7 << 4;
   TMR3 = 0;
-  PR3 = 15625; // 1/40 seconds with 128 prescaling
+  PR3 = 2170; // 1/144 seconds with 256 prescaling
   IECSET(0) = 1<<12;
   IFSCLR(0) = 1<<12;
   IPCCLR(3) = 0x1f; // Clear interrupt priority bytes of Timer 2
@@ -59,7 +59,6 @@ void setup_display_pins(void) {
 
 // Configure I/O shield user inputs
 void setup_inputs(void) {
-
 	TRISDSET = 0x7F << 5; // Button 1 and switches
 	TRISFSET = 2; // Buttons 2-4
 

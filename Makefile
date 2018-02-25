@@ -14,9 +14,8 @@ LINKSCRIPT	:= p$(shell echo "$(DEVICE)" | tr '[:upper:]' '[:lower:]').ld
 # Compiler and linker flags
 CFLAGS		+= -t -ffreestanding -march=mips32r2 -msoft-float -Wa,-msoft-float
 CFLAGS		+= -I include
-CFLAGS		+= -I libc/templates
 ASFLAGS		+= -msoft-float
-LDFLAGS		+= -T $(LINKSCRIPT)
+LDFLAGS		+= -T $(LINKSCRIPT) -lc
 
 # Filenames
 ELFFILE		= $(PROGNAME).elf
@@ -29,7 +28,6 @@ SYMSFILES	= $(wildcard *.syms)
 
 # Object file names
 OBJFILES        = $(CFILES:.c=.c.o)
-OBJFILES        += $(wildcard libc/*.c.o)
 OBJFILES        +=$(ASFILES:.S=.S.o)
 OBJFILES	+=$(SYMSFILES:.syms=.syms.o)
 

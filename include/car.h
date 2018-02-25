@@ -1,7 +1,7 @@
 #ifndef CAR_H
 #define CAR_H
 
-#define CAR_SPEED 1;
+#define CAR_SPEED 0
 
 typedef struct {
   int side; // which side of the road
@@ -9,7 +9,8 @@ typedef struct {
   int alive; // is car active
 } Car;
 
-extern void initialize_car(Car* car, int side);
+extern void initialize_car(Car* car);
+extern void start_car(Car* car, int side);
 // v represents "distance" travelled by the player's car
 extern void update_car(Car* car, int v);
 extern void draw_car(Car* car);

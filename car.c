@@ -2,7 +2,13 @@
 #include "graphics.h"
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 
-void initialize_car(Car* car, int side) {
+void initialize_car(Car* car) {
+ car->alive = 0;
+ car->progress = 0;
+ car->side = 0;
+}
+
+void start_car(Car* car, int side) {
  car->alive = 1;
  car->progress = 0;
  car->side = side;
