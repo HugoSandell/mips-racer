@@ -1,0 +1,42 @@
+#!/bin/bash
+
+function usage {
+	cat <<EOM
+Usage: makescript [OPTIONS]...
+  -i          Install to chipkit after building
+  -w          Install from Windows
+  -j [N]      Allow [N] jobs to run simultaneously
+  -h          Display this help page
+EOM
+	exit 2
+}
+
+cores=""
+install=false
+ttydev="USB0"
+for arg in $@;
+ do
+  cores=$(echo $arg | grep -o '^-[a-zA-Z]*j *[0-9][0-9]*' | grep -o '[0-9][0-9]*')
+  if [[ -n $cores ]]; then echo "Job limit set to $cores";fi
+  if [[ -n $(echo $arg | grep -o "^-[a-zA-Z]*i") ]]
+  then
+    install=true
+    echo "Will install to chipKit"
+  fi
+  if [[ -n $(echo $arg | grep -o "^-[a-zA-Z]*w") ]]
+  then
+    ttydev="S2"
+    echo "Configured for installation from Windows"
+  fi
+  if [[ -n $(echo $arg | grep -o "^-[a-zA-Z]*h") ]]
+  then
+    usage
+  fi
+done
+
+make "-j"$cores
+
+if [[ $install = true ]]
+then
+  make install "TTYDEV=/dev/tty$ttydev" "-j$cores"
+fi

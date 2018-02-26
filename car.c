@@ -2,6 +2,8 @@
 #include "graphics.h"
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 
+extern volatile unsigned game_time;
+
 void initialize_car(Car* car) {
  car->alive = 0;
  car->progress = 0;

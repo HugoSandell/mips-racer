@@ -7,10 +7,14 @@
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include <stdlib.h>
+#include <stdbool.h>
+#include "chipkitio.h"
 
 void *stdin, *stdout, *stderr; // Workaround for undefined standard library functions
 
-long long game_time = 0;
+volatile unsigned game_time = 0;
+
+bool debug_mode = false;
 
 void idle(int cyc){
 	int i;
@@ -26,30 +30,27 @@ void disable_interrupts(){
 }
 
 void user_isr() {
-  if(IFS(0) & (1<<12)) {
-    IFSCLR(0) = 1 << 12;
-    game_time++;
-    tick();
-  }
-}
-
-int init_calls(){
-  synchronize_clocks();
-  setup_display_pins();
-  setup_display_spi();
-  display_init();
-  setup_inputs();
-  init_game_timer();
-  init_game();
+  return;
 }
 
 int main() {
-PORTE = (PORTE + 1) & 0xF;
   srand(0x9324579); // Initialize randomizer
-  init_calls();
 
 	while(1){
-    // nop
+    idle(10);
+    debug_mode = get_switch(SW4);
+    if(IFS(0) & (1<<12)) {
+      IFSCLR(0) = 1 << 12;
+      TMR3=0;
+      if (debug_mode) {
+        debug();
+      } else{
+        game_time++;
+        tick();
+        draw();
+        display_update();
+      }
+    }
 	}
 
 	return 0;

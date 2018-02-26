@@ -38,10 +38,9 @@ void init_game_timer(void) {
   PR3 = 2170; // 1/144 seconds with 256 prescaling
   IECSET(0) = 1<<12;
   IFSCLR(0) = 1<<12;
-  IPCCLR(3) = 0x1f; // Clear interrupt priority bytes of Timer 2
-  IPCSET(3) = 0x1f; // Set interrupt priority bytes of Timer 2
+  IPCCLR(3) = 0x1f; // Clear interrupt priority bytes of Timer 3
+  IPCSET(3) = 0x1f; // Set interrupt priority bytes of Timer 3
   T3CONSET = 0x8000;
-  enable_interrupts();
 }
 
 // This code was copied from the lab
