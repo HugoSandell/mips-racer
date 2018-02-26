@@ -6,13 +6,14 @@
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include <stdbool.h>  /* Standard header for dealing with boolean values */
+#include <math.h>
 #include "chipkitio.h"
 #include "graphics.h"
 #include "car.h"
 
 #define FRAMES_PER_SPEEDUP 500 // How many frames before speed increases
 #define ROAD_LINE_SPACE (16) // Distance between lines on the road
-#define START_SPEED 200 // Start speed value
+#define START_SPEED 1000 // Start speed value
 #define SPEED_SCALE 2000.0 // Scalar for speed (divisor)
 #define TICKS_PER_CAR 70 // How many ticks minimum before spawning new car
 #define CAR_RATE 20 // Chance in percent of spawning car at intervals determined by TICKS_PER_CAR
@@ -109,13 +110,13 @@ void tick(void) {
   //Player controlled car
   car_pos += get_button(BTN1) - get_button(BTN2);
   bound_car();
-  debug_var = (int)ceil(SPEED_SCALE/speed);
+  debug_var = (int)(SPEED_SCALE);
   //Road animation
-  road_anim +=game_time%(int)ceil(SPEED_SCALE/speed) == 0;
+  road_anim +=game_time%(int)(SPEED_SCALE/speed) == 0;
   if(road_anim >= ROAD_LINE_SPACE) road_anim -= ROAD_LINE_SPACE;
 
   //Cars
   for (i=0; i < MAX_CARS; i++) {
-      update_car(&cars[i], (game_time+CAR_SPEED)%(int)ceil(SPEED_SCALE/speed) == 0);
+      update_car(&cars[i], (game_time+CAR_SPEED)%(int)(SPEED_SCALE/speed) == 0);
   }
 }
