@@ -12,6 +12,7 @@
 
 void draw_ne() {
   display_string(0, "Enter Your Name")
+  display_update_debug();
 }
 void tick_ne(){
   draw_ne();

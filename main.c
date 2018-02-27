@@ -14,7 +14,7 @@
 void *stdin, *stdout, *stderr; // Workaround for undefined standard library functions
 
 volatile unsigned game_time = 0;
-int state = 0; // Current state
+int state = STATE_NAME_ENTRY; // Current state
 int return_state = -1; // The state to return to, equivalent of $ra in MIPS assembly
 bool debug_mode = false;
 

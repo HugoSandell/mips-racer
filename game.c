@@ -20,7 +20,7 @@
 #define PLAYER_SPEED 200.0 // How fast does the player's car turn left or right?
 #define SPEED_SCALE 1000.0 // Universal scalar for speeds (divisor)
 
-/* GAME STATE */ 
+/* GAME STATE */
 float car_pos; // the position of the car, on a range from 0 to 24
 extern volatile unsigned game_time; // how many ticks have passed since start of game
 float speed; // the speed of the car

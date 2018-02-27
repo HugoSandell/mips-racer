@@ -23,7 +23,6 @@ HEXFILE		= $(PROGNAME).hex
 
 # Find all source files automatically
 CFILES          = $(wildcard *.c)
-CFILES          += states/$(wildcard *.c)
 ASFILES         = $(wildcard *.S)
 SYMSFILES	= $(wildcard *.syms)
 
