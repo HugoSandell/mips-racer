@@ -35,7 +35,7 @@ void init_game_timer(void) {
   disable_interrupts();
   T3CON = 7 << 4;
   TMR3 = 0;
-  PR3 = 2170; // 1/144 seconds with 256 prescaling
+  PR3 = 217; // 1/1440 seconds with 256 prescaling
   IECSET(0) = 1<<12;
   IFSCLR(0) = 1<<12;
   IPCCLR(3) = 0x1f; // Clear interrupt priority bytes of Timer 3

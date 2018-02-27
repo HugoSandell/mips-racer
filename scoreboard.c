@@ -7,7 +7,7 @@ void init_scoreboard(void) {
 }
 
 // Returns pointer to scores
-Score[10] get_highscores(void){
+Score* get_highscores(void){
   return scores;
 }
 

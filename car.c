@@ -16,13 +16,13 @@ void start_car(Car* car, int side) {
  car->side = side;
 }
 
-void update_car(Car* car, int v) {
+void update_car(Car* car, float v) {
  if(car->alive == 0) return;
  car->progress += v;
- if (car->progress >= 128) car->alive = 0;
+ if (car->progress >= 128+16) car->alive = 0;
 }
 
 void draw_car(Car* car) {
  if(car->alive == 0) return;
- draw_sprite(car->progress - 16, car->side*24, spr_car);
+ draw_sprite((int)car->progress - 16, car->side*24, spr_car);
 }

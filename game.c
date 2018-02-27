@@ -11,21 +11,23 @@
 #include "graphics.h"
 #include "car.h"
 
-#define FRAMES_PER_SPEEDUP 500 // How many frames before speed increases
+#define ACCELERATION 1 // Increase in speed per frame
 #define ROAD_LINE_SPACE (16) // Distance between lines on the road
-#define START_SPEED 1000 // Start speed value
-#define SPEED_SCALE 2000.0 // Scalar for speed (divisor)
-#define TICKS_PER_CAR 70 // How many ticks minimum before spawning new car
-#define CAR_RATE 20 // Chance in percent of spawning car at intervals determined by TICKS_PER_CAR
+#define START_SPEED 500 // Start speed value
+#define TICKS_PER_CAR 0.1 // How many ticks minimum before spawning new car
+#define CAR_RATE 40 // Chance in percent of spawning car at intervals determined by TICKS_PER_CAR
 #define MAX_CARS 8 // How many maximum cars can be on the road at one time
+#define PLAYER_SPEED 200.0 // How fast does the player's car turn left or right?
+#define SPEED_SCALE 1000.0 // Universal scalar for speeds (divisor)
 
 /* GAME STATE */
-int car_pos; // the position of the car, on a range from 0 to 24
+float car_pos; // the position of the car, on a range from 0 to 24
 extern volatile unsigned game_time; // how many ticks have passed since start of game
-int speed; // the speed of the car
+float speed; // the speed of the car
 Car cars[MAX_CARS]; // other cars on the road
-int road_anim; // road animation variable
+float road_anim; // road animation variable
 int debug_var; // variable for debugging
+int balance = 50; // variable for balancing car spawning
 
 // initialize or reset the game
 void init_game(void) {
@@ -50,15 +52,15 @@ static void draw_road(){
   int i;
   //PORTECLR = 0xFF;
   //PORTESET = 0xC0 >> (road_anim)/4; // LED effects
-  for(i = 0; i < 6; i++)
-    fill_rect((i * ROAD_LINE_SPACE) + road_anim - 6 , 15,
-    (int)(i * ROAD_LINE_SPACE) + road_anim, 16);
+  for(i = 0; i < 128/ROAD_LINE_SPACE+1; i++)
+    fill_rect((int)(i * ROAD_LINE_SPACE + road_anim) - 6 , 15,
+    (int)(i * ROAD_LINE_SPACE + road_anim), 16);
 }
 
 // Determine if a car should be spawned
 static int should_spawn_car(){
-  if(game_time % TICKS_PER_CAR != 0) return 0; // Only spawn in intervals
-  if(rand()%100 > CAR_RATE) return 0; // Random chance
+  if(game_time % (int)(TICKS_PER_CAR * SPEED_SCALE) != 0) return 0; // Only spawn in intervals
+  if(rand()%100 >= CAR_RATE) return 0; // Random chance
   return 1; // Should spawn
 }
 
@@ -67,7 +69,9 @@ static void spawn_car() {
   int i;
   for (i=0; i < MAX_CARS; i++){
     if(cars[i].alive != 1) {
-      start_car(&cars[i], rand()%2);
+      int side = (rand()%100 + balance) >= 50;
+      balance += side*2-1;
+      start_car(&cars[i], side);
       break;
     }
   }
@@ -90,8 +94,9 @@ static bool has_crashed(){
 void draw() {
   int i;
   draw_road();
-  draw_sprite(127 - 16, car_pos, spr_car); //Draw player car
-  PORTE ^= (int)road_anim & 0xFF; //### TODO: Something stops the increase of road_Anim and other things after a short amount of time after launch
+  draw_sprite(127 - 16, (int)car_pos, spr_car); //Draw player car
+  PORTECLR = 0xFF;
+  PORTESET = 3<<(int)road_anim & 0xFF; //### TODO: Something stops the increase of road_Anim and other things after a short amount of time after launch
 
   //Draw cars
   for (i=0; i < MAX_CARS; i++) {
@@ -102,21 +107,21 @@ void draw() {
 void tick(void) {
   int i;
   // Increase speed
-  if(game_time % FRAMES_PER_SPEEDUP == 0) speed++;
+  speed += ACCELERATION/SPEED_SCALE;
 
   //Spawning cars
   if(should_spawn_car()) spawn_car();
 
   //Player controlled car
-  car_pos += get_button(BTN1) - get_button(BTN2);
+  car_pos += (get_button(BTN1) - get_button(BTN2))*(PLAYER_SPEED/SPEED_SCALE);
   bound_car();
   debug_var = (int)(SPEED_SCALE);
   //Road animation
-  road_anim +=game_time%(int)(SPEED_SCALE/speed) == 0;
-  if(road_anim >= ROAD_LINE_SPACE) road_anim -= ROAD_LINE_SPACE;
+  road_anim += speed/SPEED_SCALE;
+  while(road_anim >= ROAD_LINE_SPACE) road_anim -= ROAD_LINE_SPACE;
 
   //Cars
   for (i=0; i < MAX_CARS; i++) {
-      update_car(&cars[i], (game_time+CAR_SPEED)%(int)(SPEED_SCALE/speed) == 0);
+      update_car(&cars[i], (speed + CAR_SPEED) / SPEED_SCALE);
   }
 }

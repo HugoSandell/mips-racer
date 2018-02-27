@@ -15,7 +15,7 @@
 
 // Variables to track
 extern volatile unsigned game_time;
-extern int speed;
+extern float speed;
 extern int road_anim; // road animation variable
 extern int debug_var;
 
@@ -26,7 +26,7 @@ int display_mode = 0;
 
 void debug_init() {
     saveinfo("Game Time", (void*)&game_time, sizeof(long long));
-    saveinfo("Speed", &speed, sizeof(int));
+    saveinfo("Speed", &speed, sizeof(float));
     saveinfo("Road Anim", &road_anim, sizeof(int));
     saveinfo("Debug", &debug_var, sizeof(int));
 }
