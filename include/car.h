@@ -1,7 +1,7 @@
 #ifndef CAR_H
 #define CAR_H
 
-#define CAR_SPEED 1
+#define CAR_SPEED 100
 
 typedef struct {
   int side; // which side of the road
