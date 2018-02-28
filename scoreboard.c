@@ -3,16 +3,16 @@
 static Score scores[10];
 
 void init_scoreboard(void) {
-  // TODO: Read data from EEPROM to scores
+  // TODO: Read data from EEPROM to the scores array
   for(int i=0;i<10;i++)
   {
   printf("score scores[]\n",*score to be entered* );
   }
-  while(1)
+  while(1) // How many times will this loop?
   {
-    if(score_scores[]<= highestscores) /*i am not sure if this code is correct but can you check*/
+    if(score_scores[]<= highestscores) /* Syntax error, "score_scores[]" can not be used in a comparison*/
     {
-      highestscores = score_scores;
+      highestscores = score_scores; /*where is score_scores and highestscores declared?*/
     }
   }
 }

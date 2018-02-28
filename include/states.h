@@ -4,3 +4,5 @@
 #define STATE_GAME 2
 #define STATE_GAMEOVER 3
 #define STATE_SCOREBOARD 4
+
+extern int state;

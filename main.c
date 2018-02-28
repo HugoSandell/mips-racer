@@ -14,7 +14,6 @@
 void *stdin, *stdout, *stderr; // Workaround for undefined standard library functions
 
 volatile unsigned game_time = 0;
-int state = STATE_NAME_ENTRY; // Current state
 int return_state = -1; // The state to return to, equivalent of $ra in MIPS assembly
 bool debug_mode = false;
 
@@ -25,6 +24,7 @@ void user_isr();
 static void loop();
 
 int main() {
+  state = STATE_STARTUP;
   srand(0x9324579); // Initialize randomizer
 	while(1){
     idle(10);
@@ -56,14 +56,17 @@ void user_isr() {
 
 static void loop(){
 	switch (state) {
+    case STATE_STARTUP:
+      state = STATE_NAME_ENTRY;
+    break;
+    case STATE_NAME_ENTRY:
+      tick_ne();
+      break;
 		case STATE_GAME:
 			game_time++;
 			tick();
 			draw();
 			display_update();
-			break;
-		case STATE_NAME_ENTRY:
-			tick_ne();
 			break;
 		default:
 			debug();
