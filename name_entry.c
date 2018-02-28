@@ -10,18 +10,18 @@
 #include "chipkitio.h"
 #include "graphics.h"
 
-int selection;
-char name[4] = {'A', 'A', 'A', 'A'};
-char printbuffer[16];
+static int selection;
+static char name[4] = {'A', 'A', 'A', 'A'};
+static char printbuffer[16];
 
 void draw_ne() {
   display_string(0, "Enter Your Name");
 
   strcpy(printbuffer, "                ");
   if(selection==5)
-    strcpy(printbuffer+11, "^^^^");
+    strcpy(printbuffer+11, "vvvv");
   else
-    printbuffer[selection*2-1] = '^';
+    printbuffer[selection*2] = 'v';
   display_string(1, printbuffer);
 
   strcpy(printbuffer, "A A A A   [DONE]");
@@ -33,12 +33,13 @@ void draw_ne() {
 
   strcpy(printbuffer, "                ");
   if(selection==5)
-    strcpy(printbuffer+11, "vvvv");
+    strcpy(printbuffer+11, "^^^^");
   else
-    printbuffer[selection*2-1] = 'v';
+    printbuffer[selection*2] = '^';
   display_string(3, printbuffer);
 
   display_update_debug();
+
 }
 
 void tick_ne() {

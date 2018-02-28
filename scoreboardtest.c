@@ -1,5 +1,4 @@
 #include "scoreboard.h"
-#include "scoreboard.c"
 #include <stdio.h>
 #include <stdlib.h>
 /*

@@ -3,8 +3,9 @@
 	Created on Feb 16, 2018 by Hugo Sandell
 	Contains graphics data declarations
 */
-#ifndef GRAPHICAS_H
-#define GRAPHICAS_H
+#include <stdint.h>
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
 
 typedef struct {
 	const unsigned width;
@@ -13,8 +14,10 @@ typedef struct {
 } Sprite;
 
 /* DATA */
-extern unsigned car_data[4];
-extern Sprite spr_car;
-//Sprite spr_car;
+extern const unsigned const car_data[4];
+extern const Sprite const spr_car;
+
+// FONT
+extern const uint8_t const font[];
 
 #endif // GRAPHICS_H
