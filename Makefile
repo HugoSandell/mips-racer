@@ -1,35 +1,35 @@
 # PIC32 device number
-DEVICE		= 32MX340F512H
+DEVICE = 32MX340F512H
 
 # UART settings for programmer
-TTYDEV		?=/dev/ttyUSB0
-TTYBAUD		?=115200
+TTYDEV ?=/dev/ttyUSB0
+TTYBAUD ?=115200
 
 # Name of the project
-PROGNAME	= outfile
+PROGNAME = outfile
 
 # Linkscript
-LINKSCRIPT	:= p$(shell echo "$(DEVICE)" | tr '[:upper:]' '[:lower:]').ld
+LINKSCRIPT := p$(shell echo "$(DEVICE)" | tr '[:upper:]' '[:lower:]').ld
 
 # Compiler and linker flags
-CFLAGS		+= -t -ffreestanding -march=mips32r2 -msoft-float -Wa,-msoft-float
-CFLAGS		+= -I include
-ASFLAGS		+= -msoft-float
-LDFLAGS		+= -T $(LINKSCRIPT) -lc
+CFLAGS += -t -ffreestanding -march=mips32r2 -msoft-float -Wa,-msoft-float
+CFLAGS += -I include
+ASFLAGS += -msoft-float
+LDFLAGS += -T $(LINKSCRIPT) -lc
 
 # Filenames
-ELFFILE		= $(PROGNAME).elf
-HEXFILE		= $(PROGNAME).hex
+ELFFILE = $(PROGNAME).elf
+HEXFILE = $(PROGNAME).hex
 
 # Find all source files automatically
-CFILES          = $(wildcard *.c)
-ASFILES         = $(wildcard *.S)
-SYMSFILES	= $(wildcard *.syms)
+CFILES = $(wildcard *.c)
+ASFILES = $(wildcard *.S)
+SYMSFILES = $(wildcard *.syms)
 
 # Object file names
-OBJFILES        = $(CFILES:.c=.c.o)
-OBJFILES        +=$(ASFILES:.S=.S.o)
-OBJFILES	+=$(SYMSFILES:.syms=.syms.o)
+OBJFILES = $(CFILES:.c=.c.o)
+OBJFILES += $(ASFILES:.S=.S.o)
+OBJFILES += $(SYMSFILES:.syms=.syms.o)
 
 # Hidden directory for dependency files
 DEPDIR = .deps
