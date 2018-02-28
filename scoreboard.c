@@ -1,3 +1,5 @@
+#include "scoreboard.h"
+
 static Score scores[10];
 
 void init_scoreboard(void) {

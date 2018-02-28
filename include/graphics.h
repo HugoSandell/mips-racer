@@ -15,7 +15,7 @@ typedef struct {
 
 /* DATA */
 extern const unsigned const car_data[4];
-extern const Sprite const spr_car;
+extern const Sprite spr_car;
 
 // FONT
 extern const uint8_t const font[];

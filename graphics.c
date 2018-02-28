@@ -1,10 +1,11 @@
+#include "graphics.h"
 /*
 	graphics.c
 	Created on Feb 16, 2018 by Hugo Sandell
 	Contains graphics data declarations
 */
 const unsigned const car_data[4] = {0xFF7E3C00, 0x7E7EFFFF, 0xFF7E7E7E, 0x007EFFFF};
-const Sprite const spr_car  = {.width = 16, .height = 8, .data = car_data};
+const Sprite spr_car = {.width = 16, .height = 8, .data = car_data};
 
 const uint8_t const font[] = {
 	0, 0, 0, 0, 0, 0, 0, 0,
