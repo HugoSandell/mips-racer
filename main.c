@@ -18,6 +18,25 @@ int state = STATE_NAME_ENTRY; // Current state
 int return_state = -1; // The state to return to, equivalent of $ra in MIPS assembly
 bool debug_mode = false;
 
+void idle(int cyc);
+void enable_interrupts();
+void disable_interrupts();
+void user_isr();
+static void loop();
+
+int main() {
+  srand(0x9324579); // Initialize randomizer
+	while(1){
+    idle(10);
+    if(IFS(0) & (1<<12)) {
+      IFSCLR(0) = 1 << 12;
+      TMR3=0;
+			loop();
+    }
+	}
+	return 0;
+}
+
 void idle(int cyc){
 	int i;
 	for(i = 0; i < cyc; i++);
@@ -50,19 +69,4 @@ static void loop(){
 			debug();
 	    	if(!get_switch(SW4))state=return_state;
 	}
-}
-
-int main() {
-  srand(0x9324579); // Initialize randomizer
-
-	while(1){
-    idle(10);
-    if(IFS(0) & (1<<12)) {
-      IFSCLR(0) = 1 << 12;
-      TMR3=0;
-			loop();
-    }
-	}
-
-	return 0;
 }
