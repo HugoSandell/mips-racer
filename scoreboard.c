@@ -4,6 +4,17 @@ static Score scores[10];
 
 void init_scoreboard(void) {
   // TODO: Read data from EEPROM to scores
+  for(int i=0;i<10;i++)
+  {
+  printf("score scores[]\n",*score to be entered* );
+  }
+  while(1)
+  {
+    if(score_scores[]<= highestscores) /*i am not sure if this code is correct but can you check*/
+    {
+      highestscores = score_scores;
+    }
+  }
 }
 
 // Returns pointer to scores
