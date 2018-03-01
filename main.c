@@ -16,6 +16,7 @@ void *stdin, *stdout, *stderr; // Workaround for undefined standard library func
 volatile unsigned game_time = 0;
 int return_state = -1; // The state to return to, equivalent of $ra in MIPS assembly
 bool debug_mode = false;
+int state;
 
 void idle(int cyc);
 void enable_interrupts();
