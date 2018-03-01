@@ -10,19 +10,7 @@
 #include "graphics.h"
 #include "chipkitio.h"
 
-#define DISPLAY_CHANGE_TO_COMMAND_MODE (PORTFCLR = 0x10)
-#define DISPLAY_CHANGE_TO_DATA_MODE (PORTFSET = 0x10)
-
-#define DISPLAY_ACTIVATE_RESET (PORTGCLR = 0x200)
-#define DISPLAY_DO_NOT_RESET (PORTGSET = 0x200)
-
-#define DISPLAY_ACTIVATE_VDD (PORTFCLR = 0x40)
-#define DISPLAY_ACTIVATE_VBAT (PORTFCLR = 0x20)
-
-#define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
-#define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
-extern int x;
-unsigned char pixelbuffer[128][4]; // A buffer to store the data to be sent to the display
+static unsigned char pixelbuffer[128][4]; // A buffer to store the data to be sent to the display
 
 // This code was copied from the lab
 uint8_t spi_send_recv(uint8_t data) {
@@ -81,15 +69,15 @@ void clear_buffer(void) {
 
 // Starts up the display
 void display_init(void) {
-  DISPLAY_CHANGE_TO_COMMAND_MODE;
+  PORTFCLR = 0x10;
 	idle(10);
-	DISPLAY_ACTIVATE_VDD;
-	idle(1000000);
+	PORTFCLR = 0x40;
+	idle(100000);
 
 	spi_send_recv(0xAE);
-	DISPLAY_ACTIVATE_RESET;
+	PORTGCLR = 0x200;
 	idle(10);
-	DISPLAY_DO_NOT_RESET;
+	PORTGSET = 0x200;
 	idle(10);
 
 	spi_send_recv(0x8D);
@@ -98,8 +86,8 @@ void display_init(void) {
 	spi_send_recv(0xD9);
 	spi_send_recv(0xF1);
 
-	DISPLAY_ACTIVATE_VBAT;
-	idle(10000000);
+	PORTFCLR = 0x20;
+	idle(1000000);
 
 	spi_send_recv(0xA1);
 	spi_send_recv(0xC8);
@@ -116,14 +104,14 @@ void display_update(void) {
 	int i, j, k;
 	int c;
 	for(i = 0; i < 4; i++) { //i corresponds to line
-		DISPLAY_CHANGE_TO_COMMAND_MODE;
+		PORTFCLR = 0x10;
 		spi_send_recv(0x22);
 		spi_send_recv(i);
 
 		spi_send_recv(0x0);
 		spi_send_recv(0x10);
 
-		DISPLAY_CHANGE_TO_DATA_MODE;
+		PORTFSET = 0x10;
 
 		for(j = 0; j < 16; j++) { // J corresponds to character on line
 			for(k = 0; k < 8; k++) // k corresponds to column in character
