@@ -14,7 +14,6 @@ typedef struct {
 } Sprite;
 
 /* DATA */
-extern const unsigned const car_data[4];
 extern const Sprite spr_car;
 
 // FONT
