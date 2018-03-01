@@ -8,7 +8,7 @@ void init_scoreboard(void) {
   // TODO: Read data from EEPROM to the scores array
   int i;
   for(i = 0; i < 10; i++) {
-    scores[i] = {"TEST", 100-i};
+    scores[i] = (Score){"TEST", 100-i};
   }
 }
 
