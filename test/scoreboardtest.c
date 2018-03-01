@@ -3,27 +3,54 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define TEST1_PASS "Initialization test passed"
+#define TEST1_FAIL "Initialization test failed"
+#define TEST2_PASS "-unimplemented- test passed"
+#define TEST2_FAIL "-unimplemented- test failed"
+#define TEST3_PASS "-unimplemented- test passed"
+#define TEST3_FAIL "-unimplemented- test failed"
+#define TEST4_PASS "-unimplemented- test passed"
+#define TEST4_FAIL "-unimplemented- test failed"
+#define TEST5_PASS "-unimplemented- test passed"
+#define TEST5_FAIL "-unimplemented- test failed"
+
 bool test1() {
   init_scoreboard();
-  if(get_highscores()[0].name != "DBRO") return false;
-  if(get_highscores()[0].score != 9999999999) return false;
-  if(get_highscores()[1].name != "OS K") return false;
-  if(get_highscores()[1].score != 1234500) return false;
-  if(get_highscores()[2].name != "HU S") return false;
-  if(get_highscores()[2].score != 1234500) return false;
+  if(get_highscores()[0].name != "TEST") return false;
+  if(get_highscores()[0].score != 100) return false;
+  if(get_highscores()[1].name != "TEST") return false;
+  if(get_highscores()[1].score != 98) return false;
+  if(get_highscores()[2].name != "TEST") return false;
+  if(get_highscores()[2].score != 96) return false;
   if(get_highscores()[3].name != "TEST") return false;
-  if(get_highscores()[3].score != 1000000) return false;
+  if(get_highscores()[3].score != 94) return false;
   // ...
-  if(get_highscores()[7].name != "AAAA") return false;
-  if(get_highscores()[7].score != 300000) return false;
-  if(get_highscores()[8].name != "BBBB") return false;
-  if(get_highscores()[8].score != 200000) return false;
-  if(get_highscores()[9].name != "CCCC") return false;
-  if(get_highscores()[9].score != 100000) return false;
+  if(get_highscores()[7].name != "TEST") return false;
+  if(get_highscores()[7].score != 92) return false;
+  if(get_highscores()[8].name != "TEST") return false;
+  if(get_highscores()[8].score != 90) return false;
+  if(get_highscores()[9].name != "TEST") return false;
+  if(get_highscores()[9].score != 98) return false;
   return true;
 }
 
 bool test2(){
+  new_score({"TST2", 97});
+  if(get_highscores()[0].name != "TEST") return false;
+  if(get_highscores()[0].score != 100) return false;
+  if(get_highscores()[1].name != "TEST") return false;
+  if(get_highscores()[1].score != 98) return false;
+  if(get_highscores()[2].name != "TST2") return false;
+  if(get_highscores()[2].score != 97) return false;
+  if(get_highscores()[3].name != "TEST") return false;
+  if(get_highscores()[3].score != 96) return false;
+  if(get_highscores()[4].name != "TEST") return false;
+  if(get_highscores()[4].score != 94) return false;
+  // ...
+  if(get_highscores()[8].name != "TEST") return false;
+  if(get_highscores()[8].score != 92) return false;
+  if(get_highscores()[9].name != "TEST") return false;
+  if(get_highscores()[9].score != 90) return false;
   return true;
 }
 
@@ -35,7 +62,7 @@ bool test4(){
   return true;
 }
 
-bool test6(){
+bool test5(){
   return true;
 }
 
