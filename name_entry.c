@@ -42,7 +42,7 @@ void tick_ne() {
   if(selection > 4) selection -= 5;
 
   if(selection == 4) {
-    if (get_buttons() && 3) {
+    if (get_buttons() & 3) {
       state = STATE_GAME;
     }
   } else if(!(get_button(BTN4) || get_button(BTN3))) {
