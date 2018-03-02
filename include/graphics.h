@@ -7,6 +7,10 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+// Sprite drawing flags //
+#define MIRROR_HORIZONTAL 1
+#define MIRROR_VERTICAL 2
+
 typedef struct {
 	const unsigned width;
 	const unsigned height;

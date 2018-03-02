@@ -37,15 +37,28 @@ void clear_pixel(int x, int y) {
 }
 
 // Draws a sprite with top left corner at specified coordinates
-void draw_sprite(int x, int y, const Sprite s) {
-	unsigned i, j, word, bit, bit_in_word;
+void draw_sprite(int x, int y, const Sprite s, unsigned flags) {
+	unsigned i, j, word, bit, bit_in_word, px, py;
 	for(i = 0; i < s.width; i++) {
 		for(j = 0; j < s.height; j++) {
 			bit = (i*s.height+j);
 			word = bit/32;
 			bit_in_word = bit%32;
-			if(s.data[word] & (1 << bit_in_word))
-				set_pixel(x+i, y+j);
+			if(s.data[word] & (1 << bit_in_word)) {
+        px = x;
+        py = y;
+        if(flags & MIRROR_VERTICAL){
+          py += s.height - j - 1;
+        }else{
+          py += j;
+        }
+        if(flags & MIRROR_HORIZONTAL){
+          px += s.width - i - 1;
+        }else{
+          px += i;
+        }
+				set_pixel(px, py);
+      }
 		}
 	}
 }

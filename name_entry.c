@@ -35,6 +35,10 @@ void draw_ne() {
   display_update_debug();
 }
 
+char* get_name() {
+  return name;
+}
+
 void tick_ne() {
   selection -= get_button(BTN4);
   selection += get_button(BTN3);
@@ -42,7 +46,7 @@ void tick_ne() {
   if(selection > 4) selection -= 5;
 
   if(selection == 4) {
-    if (get_buttons() & 3) {
+    if ((get_buttons() & 3) == 3) {
       state = STATE_GAME;
     }
   } else if(!(get_button(BTN4) || get_button(BTN3))) {
@@ -56,6 +60,12 @@ void tick_ne() {
       name[selection] = ' ';
     }
   }
-  while(get_buttons()){}; //wait until all buttons are released
+  while(get_buttons()){
+    if(selection == 4) {
+      if ((get_buttons() & 3) == 3) {
+        state = STATE_GAME;
+      }
+    }
+  }; //wait until all buttons are released
   draw_ne();
 }

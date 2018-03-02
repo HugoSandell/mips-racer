@@ -21,7 +21,6 @@ int state;
 void idle(int cyc);
 void enable_interrupts();
 void disable_interrupts();
-void user_isr();
 static void loop();
 
 int main() {
@@ -51,10 +50,6 @@ void disable_interrupts(){
 	__asm__("di");
 }
 
-void user_isr() {
-  return;
-}
-
 static void loop(){
 	switch (state) {
     case STATE_STARTUP:
@@ -69,6 +64,9 @@ static void loop(){
 			draw();
 			display_update();
 			break;
+    case STATE_GAMEOVER:
+      tick_go();
+    break;
 		default:
 			debug();
 	    	if(!get_switch(SW4))state=return_state;

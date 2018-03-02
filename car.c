@@ -24,5 +24,5 @@ void update_car(Car* car, float v) {
 
 void draw_car(Car* car) {
  if(car->alive == 0) return;
- draw_sprite((int)car->progress - 16, car->side*24, spr_car);
+ draw_sprite((int)car->progress - 16, 2 + car->side*20, spr_car, MIRROR_HORIZONTAL);
 }

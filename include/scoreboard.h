@@ -3,7 +3,7 @@
 
 typedef struct {
   char name[4];
-  unsigned score;
+  unsigned points;
 } Score;
 
 // Initializes the scoreboard and loads data from EEPROM

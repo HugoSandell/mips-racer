@@ -5,4 +5,6 @@
 #define STATE_GAMEOVER 3
 #define STATE_SCOREBOARD 4
 
+extern void tick_go(void);
+extern void tick_ne(void);
 extern int state;

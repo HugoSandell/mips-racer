@@ -1,3 +1,6 @@
+#include "scoreboard.h"
+#include "globals.h"
+
 /* Non-Maskable Interrupt; something bad likely happened, so hang */
 void _nmi_handler() {
 	for(;;);
@@ -17,5 +20,6 @@ void _on_bootstrap() {
   setup_inputs();
   init_game_timer();
   init_game();
+  init_scoreboard();
   debug_init();
 }

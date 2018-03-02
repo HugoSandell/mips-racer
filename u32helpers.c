@@ -147,7 +147,6 @@ static void num32asc( char * s, unsigned n, int sz )
       *s++ = "bad size"[ i ];
 }
 
-
 /*
  * itoa
  *
