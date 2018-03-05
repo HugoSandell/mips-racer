@@ -9,12 +9,13 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "chipkitio.h"
+#include "gameover.h"
 #include "states.h"
 
 void *stdin, *stdout, *stderr; // Workaround for undefined standard library functions
 
 volatile unsigned game_time = 0;
-int return_state = -1; // The state to return to, equivalent of $ra in MIPS assembly
+int return_state = -1; // The state to return to
 bool debug_mode = false;
 int state;
 
@@ -27,7 +28,7 @@ int main() {
   state = STATE_STARTUP;
   srand(0x9324579); // Initialize randomizer
 	while(1){
-    idle(10);
+    idle(1);
     if(IFS(0) & (1<<12)) {
       IFSCLR(0) = 1 << 12;
       TMR3=0;
@@ -66,9 +67,9 @@ static void loop(){
 			break;
     case STATE_GAMEOVER:
       tick_go();
-    break;
+      break;
 		default:
 			debug();
-	    	if(!get_switch(SW4))state=return_state;
+	    if(!get_switch(SW4))state=return_state;
 	}
 }

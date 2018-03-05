@@ -12,17 +12,17 @@
 #include "states.h"
 
 static int selection;
-static char name[4] = {'A', 'A', 'A', 'A'};
+char player_name[4] = {'A', 'A', 'A', 'A'};
 static char printbuffer[16];
 
 void draw_ne() {
   display_string(0, "Enter Your Name:");
 
   strcpy(printbuffer, " A A A A   DONE ");
-  printbuffer[1] = name[0];
-  printbuffer[3] = name[1];
-  printbuffer[5] = name[2];
-  printbuffer[7] = name[3];
+  printbuffer[1] = player_name[0];
+  printbuffer[3] = player_name[1];
+  printbuffer[5] = player_name[2];
+  printbuffer[7] = player_name[3];
   if(selection < 4) {
     printbuffer[selection*2] = '[';
     printbuffer[selection*2+2] = ']';
@@ -36,7 +36,7 @@ void draw_ne() {
 }
 
 char* get_name() {
-  return name;
+  return player_name;
 }
 
 void tick_ne() {
@@ -50,14 +50,14 @@ void tick_ne() {
       state = STATE_GAME;
     }
   } else if(!(get_button(BTN4) || get_button(BTN3))) {
-    name[selection] -= get_button(BTN2);
-    name[selection] += get_button(BTN1);
-    if(name[selection] == ' ' + 1){
-      name[selection] = 'A';
-    } else if(name[selection] == ' ' - 1){
-      name[selection] = 'Z';
-    } else if(name[selection] < 'A' || name[selection] > 'Z') {
-      name[selection] = ' ';
+    player_name[selection] -= get_button(BTN2);
+    player_name[selection] += get_button(BTN1);
+    if(player_name[selection] == ' ' + 1){
+      player_name[selection] = 'A';
+    } else if(player_name[selection] == ' ' - 1){
+      player_name[selection] = 'Z';
+    } else if(player_name[selection] < 'A' || player_name[selection] > 'Z') {
+      player_name[selection] = ' ';
     }
   }
   while(get_buttons()){

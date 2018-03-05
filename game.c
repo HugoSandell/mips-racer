@@ -116,10 +116,6 @@ void draw(void) {
 }
 
 void tick(void) {
-  if(has_crashed()) {
-    new_score((Score){get_name(), 0});
-    state = STATE_GAMEOVER;
-  }
 
   // Increase speed
   speed += ACCELERATION/SPEED_SCALE;
@@ -142,5 +138,11 @@ void tick(void) {
   int i;
   for (i=0; i < MAX_CARS; i++) {
       update_car(&cars[i], (speed + CAR_SPEED) / SPEED_SCALE);
+  }
+
+  if(has_crashed()) {
+    new_score((Score){{player_name[0], player_name[1], player_name[2], player_name[3]}, score});
+    state = STATE_GAMEOVER;
+    return;
   }
 }

@@ -14,6 +14,6 @@ extern Score* get_highscores(void);
 
 /* Manages new scores, writes to EEPROM if necessary
    Returns true if the score was inserted into the scoreboard */
-extern int new_score(Score);
+extern int new_score(Score score);
 
 #endif // SCOREBOARD_H

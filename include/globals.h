@@ -1,4 +1,4 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
-char* get_name(void);
+extern char* player_name;
 #endif //GLOBALS_H

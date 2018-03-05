@@ -1,4 +1,5 @@
 #include <string.h>
+#include <pic32mx.h>
 #include "chipkitio.h"
 #include "u32helpers.h"
 #include "states.h"
@@ -13,6 +14,7 @@ static void draw_go(){
 }
 
 void tick_go(){
+  PORTEINV=0xFF;
   if((get_buttons() & 3) == 3) {
     init_game();
     state = STATE_GAME;
