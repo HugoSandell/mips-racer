@@ -14,7 +14,7 @@
 #include "scoreboard.h"
 #include "globals.h"
 
-#define ACCELERATION 10 // Increase in speed
+#define ACCELERATION 20 // Increase in speed
 #define ROAD_LINE_SPACE (16) // Distance between lines on the road
 #define START_SPEED 500 // Start speed value
 #define TICKS_PER_CAR 0.1 // How many ticks minimum before spawning new car
@@ -34,10 +34,12 @@ float road_anim; // road animation variable
 int debug_var; // variable for debugging
 int balance; // variable for balancing car spawning
 static int score = 0;
+static bool start = false;
 
 // initialize or reset the game
 void init_game(void) {
   int i;
+  start = false;
   score = 0;
   road_anim = 0;
   car_pos = 16-4;
@@ -116,7 +118,10 @@ void draw(void) {
 }
 
 void tick(void) {
-
+  if(!start){
+    start |= get_button(BTN4) | get_button(BTN3);
+    return;
+  }
   // Increase speed
   speed += ACCELERATION/SPEED_SCALE;
 

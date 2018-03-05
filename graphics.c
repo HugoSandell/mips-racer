@@ -7,6 +7,7 @@
 static const unsigned const car_data[4] = {0xFF7E3C00, 0x7E7EFFFF, 0xFF7E7E7E, 0x007EFFFF};
 const Sprite spr_car = {.width = 16, .height = 8, .data = car_data};
 
+// Copied from labs
 const uint8_t const font[] = {
 	0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0,
